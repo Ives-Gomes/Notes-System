@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div `
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  grid-template-rows: 2fr 2fr;
+  /* grid-template-columns: 1fr repeat(3, minmax(auto, 300px)) 1fr; */
+  /* grid-template-rows: 2fr 2fr; */
   justify-items: center;
 
   .myForm {
@@ -20,6 +20,7 @@ export const Container = styled.div `
     box-shadow: 1px 1px 20px #000;
     margin: 0 auto;
     margin-bottom: 40px;
+    margin-top: 14px;
     }
     input {
       width: 250px;
@@ -46,6 +47,12 @@ export const Container = styled.div `
       border-radius: 3px;
       resize: none;
     }
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
+
     .myButton {
       width: 80px;
       height: 35px;
@@ -61,6 +68,13 @@ export const Container = styled.div `
       background: #8861E8;
       font-weight: bold;
       box-shadow: 2px 2px 5px #000;
+    }
+
+    .alert {
+      color: red;
+      position: absolute;
+      margin-top: 2px;
+      margin-left: 2px;
     }
 
     .myList {
@@ -107,7 +121,7 @@ export const Container = styled.div `
         box-shadow: 2px 2px 5px #000;
         float: left;
         margin-bottom: 10px;
-        margin-top: 20px;
+        margin-right: 20px;
       }
       button:nth-child(even) {
         background-color: yellow;

@@ -7,6 +7,8 @@ export default class App extends Component {
     super(props);
     this.state={
       title: 'Notes System',
+      alertBool: false,
+      alert: 'Required fields!',
       titles: [],
       annotations: [],
       verify: 0,
@@ -22,26 +24,31 @@ export default class App extends Component {
     let name = this.refs.name.value;
     let address = this.refs.address.value;
 
-    this.setState({ titles: {...this.state.titles, name} });
-    this.setState({ annotations: {...this.state.annotations, address} });
+    if(name === '' || address === '') {
+      this.setState({ alertBool: true });
+    } else {
+      this.setState({ titles: {...this.state.titles, name} });
+      this.setState({ annotations: {...this.state.annotations, address} });
 
-    if(this.state.verify === 0) {
-      let data = {
-        name, address
-      }
+      if(this.state.verify === 0) {
+        let data = {
+          name, address
+        }
 
-      datas.push(data);
+        datas.push(data);
+      } else {
+        let index = this.state.index;
+        datas[index].name = name;
+        datas[index].address = address;
+      }   
+      
+      this.setState({
+        datas: datas,
+        verify: 0,
+      });
+
+      this.setState({ alertBool: false });
     }
-    else {
-      let index = this.state.index;
-      datas[index].name = name;
-      datas[index].address = address;
-    }   
-    
-    this.setState({
-      datas: datas,
-      verify: 0,
-    });
 
     this.refs.myForm.reset();
   }
@@ -78,21 +85,29 @@ export default class App extends Component {
           <form ref="myForm" className="myForm">
             <input maxLength="27" type="text" ref="name" placeholder="Title" className="formField" />
             <textarea type="text" ref="address" placeholder="Annotation" className="formField" />
-            <button onClick={(e)=>this.fSubmit(e)} className="myButton">ADD</button>
+            <div>
+              <label className="alert" style={{
+                  display: this.state.alertBool ? null : 'none' 
+                }}>{this.state.alert}</label>
+              <button onClick={(e)=>this.fSubmit(e)} className="myButton">ADD</button>
+            </div>           
           </form>
-
-          <pre>
-            {datas.map((data, i) =>  
-              <div key={i} className="myList">
-                <p>Title:</p> 
-                <label> {data.name} </label> <br /> 
-                <p>Annotation:</p> 
-                <textarea readOnly className="annotationText" value={data.address} /> <br />
-                <button onClick={()=>this.fRemove(i)} className="myListButton">DELETE</button>
-                <button onClick={()=>this.fEdit(i)} className="myListButton1">EDIT</button>
-              </div>                   
-            )}
-          </pre>
+          <div>
+            <pre>
+              {datas.map((data, i) =>  
+                <div key={i} className="myList">
+                  <p>Title:</p> 
+                  <label> {data.name} </label> <br /> 
+                  <p>Annotation:</p> 
+                  <textarea readOnly className="annotationText" value={data.address} /> <br />
+                  <div className="div__button">
+                    <button onClick={()=>this.fRemove(i)} className="myListButton">DELETE</button>
+                    <button onClick={()=>this.fEdit(i)} className="myListButton1">EDIT</button>
+                  </div>               
+                </div>                   
+              )}
+            </pre>
+          </div>         
         </Container>        
       </div>
     );
