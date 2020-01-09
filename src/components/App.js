@@ -48,9 +48,9 @@ export default class App extends Component {
       });
 
       this.setState({ alertBool: false });
-    }
 
-    this.refs.myForm.reset();
+      this.refs.myForm.reset();
+    }  
   }
 
   fRemove = (i) => {
@@ -76,11 +76,13 @@ export default class App extends Component {
 
   render() {
     let datas = this.state.datas;
+
     return (
       <div className="App">
         <div>
           <h2>{this.state.title}</h2>
         </div>
+
         <Container>
           <form ref="myForm" className="myForm">
             <input maxLength="27" type="text" ref="name" placeholder="Title" className="formField" />
@@ -91,23 +93,20 @@ export default class App extends Component {
                 }}>{this.state.alert}</label>
               <button onClick={(e)=>this.fSubmit(e)} className="myButton">ADD</button>
             </div>           
-          </form>
-          <div>
-            <pre>
-              {datas.map((data, i) =>  
-                <div key={i} className="myList">
-                  <p>Title:</p> 
-                  <label> {data.name} </label> <br /> 
-                  <p>Annotation:</p> 
-                  <textarea readOnly className="annotationText" value={data.address} /> <br />
-                  <div className="div__button">
-                    <button onClick={()=>this.fRemove(i)} className="myListButton">DELETE</button>
-                    <button onClick={()=>this.fEdit(i)} className="myListButton1">EDIT</button>
-                  </div>               
-                </div>                   
-              )}
-            </pre>
-          </div>         
+          </form>  
+                          
+          {datas.map((data, i) =>  
+            <div key={i} className="myList">
+              <p>Title:</p> 
+              <label> {data.name} </label> <br /> 
+              <p>Annotation:</p> 
+              <textarea readOnly className="annotationText" value={data.address} /> <br />
+              <div className="div__button">
+                <button onClick={()=>this.fRemove(i)} className="myListButton">DELETE</button>
+                <button onClick={()=>this.fEdit(i)} className="myListButton1">EDIT</button>
+              </div>               
+            </div>                   
+          )}                            
         </Container>        
       </div>
     );

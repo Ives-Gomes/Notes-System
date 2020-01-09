@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div `
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* grid-template-columns: 1fr repeat(3, minmax(auto, 300px)) 1fr; */
-  /* grid-template-rows: 2fr 2fr; */
+  grid-template-columns: repeat(auto-fit, minmax(350px));
+  grid-template-rows: 3fr 3fr;
   justify-items: center;
 
   .myForm {
