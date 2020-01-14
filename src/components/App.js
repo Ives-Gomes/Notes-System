@@ -12,6 +12,7 @@ export default class App extends Component {
       titles: [],
       annotations: [],
       verify: 0,
+      delete: 0,
       index: '',
       datas: [],
     }
@@ -54,11 +55,15 @@ export default class App extends Component {
   }
 
   fRemove = (i) => {
-    let datas = this.state.datas;
-    datas.splice(i,1);
-    this.setState({
-      datas: datas
-    });
+    const del = window.confirm("Do you really want to delete?");
+
+    if(del) {
+      let datas = this.state.datas;
+      datas.splice(i,1);
+      this.setState({
+        datas: datas
+      });
+    } 
 
     this.refs.myForm.reset();
   }
@@ -84,29 +89,31 @@ export default class App extends Component {
         </div>
 
         <Container>
-          <form ref="myForm" className="myForm">
-            <input maxLength="27" type="text" ref="name" placeholder="Title" className="formField" />
-            <textarea type="text" ref="address" placeholder="Annotation" className="formField" />
-            <div>
-              <label className="alert" style={{
-                  display: this.state.alertBool ? null : 'none' 
-                }}>{this.state.alert}</label>
-              <button onClick={(e)=>this.fSubmit(e)} className="myButton">ADD</button>
-            </div>           
-          </form>  
-                          
-          {datas.map((data, i) =>  
-            <div key={i} className="myList">
-              <p>Title:</p> 
-              <label> {data.name} </label> <br /> 
-              <p>Annotation:</p> 
-              <textarea readOnly className="annotationText" value={data.address} /> <br />
-              <div className="div__button">
-                <button onClick={()=>this.fRemove(i)} className="myListButton">DELETE</button>
-                <button onClick={()=>this.fEdit(i)} className="myListButton1">EDIT</button>
-              </div>               
-            </div>                   
-          )}                            
+          <div className="grid">
+            <form ref="myForm" className="myForm">
+              <input maxLength="27" type="text" ref="name" placeholder="Title" className="formField" />
+              <textarea type="text" ref="address" placeholder="Annotation" className="formField" />
+              <div>
+                <label className="alert" style={{
+                    display: this.state.alertBool ? null : 'none' 
+                  }}>{this.state.alert}</label>
+                <button onClick={(e)=>this.fSubmit(e)} className="myButton">ADD</button>
+              </div>           
+            </form>  
+                            
+            {datas.map((data, i) =>  
+              <div key={i} className="myList">
+                <p>Title:</p> 
+                <label> {data.name} </label> <br /> 
+                <p>Annotation:</p> 
+                <textarea readOnly className="annotationText" value={data.address} /> <br />
+                <div className="div__button">
+                  <button onClick={()=>this.fRemove(i)} className="myListButton">DELETE</button>
+                  <button onClick={()=>this.fEdit(i)} className="myListButton1">EDIT</button>
+                </div>               
+              </div>                   
+            )} 
+          </div>                           
         </Container>        
       </div>
     );

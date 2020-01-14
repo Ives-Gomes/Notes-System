@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div `
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(350px));
-  grid-template-rows: 3fr 3fr;
-  justify-items: center;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(350px));
+    /* grid-template-rows: 3fr 3fr; */
+    justify-items: center;
+  }
 
   .myForm {
     width: 100%;
@@ -21,6 +23,11 @@ export const Container = styled.div `
     margin: 0 auto;
     margin-bottom: 40px;
     margin-top: 14px;
+    border: 2px solid white;
+
+    &:hover {
+      border: 2px solid darkblue;
+    }
     }
     input {
       width: 250px;
@@ -90,6 +97,11 @@ export const Container = styled.div `
       box-shadow: 1px 1px 20px #000;
       margin: 0 auto;
       margin-bottom: 40px;
+      border: 2px solid white;
+
+    &:hover {
+      border: 2px solid darkblue;
+    }
 
       p {
         font-size: 15px;
