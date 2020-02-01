@@ -1,9 +1,11 @@
-<img align="right" src="notes.png" width="20%" height="20%">
+<div align="center">
+<img src="notes.png" width="20%" height="20%">
 
-<h1 align="center"> Notes System </h1>
+<h1> Notes System </h1>
 
-<p align="center"> An application for annotations :pencil: </p>
-
+<p> An application for annotations :pencil: </p>
+</div>
+  
 ---
 
 ## Features
