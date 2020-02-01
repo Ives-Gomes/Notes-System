@@ -1,4 +1,4 @@
-![Notes Image](notes.png =200x200)
+<img src="image.png" width="40%" height="40%">
 
 <h1 align="center"> Notes System </h1>
 
