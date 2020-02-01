@@ -1,3 +1,5 @@
+![Notes Image](notes.png)
+
 <h1 align="center"> Notes System </h1>
 
 <p align="center"> An application for annotations :pencil: </p>
