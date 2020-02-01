@@ -1,4 +1,4 @@
-<img align="center" src="notes.png" width="20%" height="20%">
+<img align="right" src="notes.png" width="20%" height="20%">
 
 <h1 align="center"> Notes System </h1>
 
