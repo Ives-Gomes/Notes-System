@@ -13,7 +13,6 @@ This app features all the latest tools and practices in web development!
 - :sparkling_heart: *Lint* — ESlint/Prettier/Editor Config
 
 ## Getting started
-Before you run this application you need to make sure the server is running!.
 
   1. Clone this repo using `https://github.com/Ives-Gomes/Notes-System`
   2. Run `yarn` to install dependencies.
