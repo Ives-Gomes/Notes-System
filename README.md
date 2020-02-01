@@ -1,6 +1,6 @@
-# Notes System
+<h1> Notes System </h1>
 
-An application for annotations :pencil:
+<p> An application for annotations :pencil: </p>
 
 ---
 
