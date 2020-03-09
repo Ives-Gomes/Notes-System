@@ -14,7 +14,6 @@ This app features all the latest tools and practices in web development!
 
 - ⚛ *React* — A library to build user interfaces
 -  :nail_care: *CSS* — styled-components
-- :sparkling_heart: *Lint* — ESlint/Prettier/Editor Config
 
 ## Getting started
 
