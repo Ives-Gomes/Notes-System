@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import { Container } from './styles.js';
+import axios from 'axios';
 
 export default class App extends Component {
 
@@ -18,28 +19,47 @@ export default class App extends Component {
     }
   } 
 
+  componentDidMount() {
+    axios.get(`https://annotation-to-ives.herokuapp.com/notes/1`)
+      .then(data => {
+        const title = data.title;
+        const annotation = data.description;
+        this.setState({ titles: {...this.state.titles, title} });
+        this.setState({ annotations: {...this.state.annotations, annotation} });
+
+        let datas = this.state.datas;
+        let bd = {
+          title,
+          annotation
+        }
+        datas.push(bd);
+        console.log(datas);
+      });
+  }
+
   fSubmit = (e) =>{
+
     e.preventDefault();
 
     let datas = this.state.datas;
-    let name = this.refs.name.value;
+    let title = this.refs.title.value;
     let address = this.refs.address.value;
 
-    if(name === '' || address === '') {
+    if(title === '' || address === '') {
       this.setState({ alertBool: true });
-    } else {
-      this.setState({ titles: {...this.state.titles, name} });
+    } else { 
+      this.setState({ titles: {...this.state.titles, title} });
       this.setState({ annotations: {...this.state.annotations, address} });
 
       if(this.state.verify === 0) {
         let data = {
-          name, address
+          title, address
         }
 
         datas.push(data);
       } else {
         let index = this.state.index;
-        datas[index].name = name;
+        datas[index].title = title;
         datas[index].address = address;
       }   
       
@@ -70,7 +90,7 @@ export default class App extends Component {
 
   fEdit = (i) => {
     let data = this.state.datas[i];
-    this.refs.name.value = data.name;
+    this.refs.title.value = data.title;
     this.refs.address.value = data.address;
 
     this.setState({
@@ -91,7 +111,7 @@ export default class App extends Component {
         <Container>
           <div className="grid">
             <form ref="myForm" className="myForm">
-              <input maxLength="27" type="text" ref="name" placeholder="Title" className="formField" />
+              <input maxLength="27" type="text" ref="title" placeholder="Title" className="formField" />
               <textarea type="text" ref="address" placeholder="Annotation" className="formField" />
               <div>
                 <label className="alert" style={{
@@ -104,7 +124,7 @@ export default class App extends Component {
             {datas.map((data, i) =>  
               <div key={i} className="myList">
                 <p>Title:</p> 
-                <label> {data.name} </label> <br /> 
+                <label> {data.title} </label> <br /> 
                 <p>Annotation:</p> 
                 <textarea readOnly className="annotationText" value={data.address} /> <br />
                 <div className="div__button">
