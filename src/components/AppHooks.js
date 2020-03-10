@@ -15,7 +15,7 @@ export default function AppHooks() {
 
       const { data } = response;
 
-      setNotes(data.reverse()); // No backend ele não lista o mais atual
+      setNotes(data.reverse());
     }
 
     getNotes();
