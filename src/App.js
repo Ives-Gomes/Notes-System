@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from '@unform/web';
 import Input from './components/Input';
+import Lottie from 'react-lottie';
+import note from './note.json';
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: note,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+}
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -29,13 +40,16 @@ export default function App() {
 
   return (
     <>
+      <Lottie options={defaultOptions} 
+                  height={150} 
+                  width={150} />
+
       <Form onSubmit={handleSubmit}>
         <label>Title:</label>
         <Input name="title" type="text" />
         <label>Annotation</label>
         <Input name="annotation" type="text" />
-
-        <button type="submit">ADD</button>
+        <button type="submit">ADD</button>    
       </Form>
 
       <div>
