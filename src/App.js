@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Form } from '@unform/web';
+import Input from './components/Input';
 
-function App() {
+export default function App() {
+  const [cards, setCards] = useState([]);
+
+  function handleSubmit(data, { reset }) {
+    const { title, annotation } = data;
+
+    setCards([...cards, { title, annotation }]);
+
+    reset();
+  }
+
+  function handleDelete(title) {
+    let del = cards.map((e) => e.title ).indexOf(title);
+
+    cards.splice(del, 1);
+
+    setCards([...cards]);  
+  }
+
+  function handleUpdate(title, annotation) {
+    let update = cards.map((e) => e.title ).indexOf(title);
+
+    setCards([...cards]); 
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <label>Title:</label>
+        <Input name="title" type="text" />
+        <label>Annotation</label>
+        <Input name="annotation" type="text" />
+
+        <button type="submit">ADD</button>
+      </Form>
+
+      <div>
+        {cards.map((data, i) =>
+          <div key={i}>
+            <label>Title:</label>
+            <p>{data.title}</p>
+            <label>Annotation:</label>
+            <p>{data.annotation}</p>
+
+            <button onClick={() => handleDelete(data.title)}>DELETE</button>
+            <button onClick={() => handleUpdate(data.title, data.annotation)}>EDIT</button>
+          </div> 
+        )}
+      </div>   
+    </>
   );
 }
-
-export default App;
