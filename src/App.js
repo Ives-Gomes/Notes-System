@@ -5,6 +5,7 @@ import { Form } from "@unform/web";
 
 import Input from "./components/Input";
 import note from "./note.json";
+import { Container } from "./styles/style";
 
 const defaultOptions = {
   loop: true,
@@ -20,23 +21,31 @@ let index = 0;
 
 export default function App() {
   const formRef = useRef(null);
+  const [alert, setAlert] = useState(false);
   const [cards, setCards] = useState([]);
 
   function handleSubmit(data, { reset }) {
     const { title, annotation } = data;
+    let inputTitle = formRef.current.getFieldValue("title");
+    let inputAnnotation = formRef.current.getFieldValue("annotation");
 
-    if (updating) {
-      let newCards = [...cards];
-      newCards[index] = { title, annotation };
-
-      setCards(newCards);
-
-      updating = false;
+    if (inputTitle === "" || inputAnnotation === "") {
+      setAlert(true);
     } else {
-      setCards([...cards, { title, annotation }]);
-    }
+      if (updating) {
+        let newCards = [...cards];
+        newCards[index] = { title, annotation };
 
-    reset();
+        setCards(newCards);
+
+        updating = false;
+      } else {
+        setCards([...cards, { title, annotation }]);
+      }
+
+      setAlert(false);
+      reset();
+    }
   }
 
   function handleDelete(title) {
@@ -58,7 +67,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <Container>
       <Lottie options={defaultOptions} height={150} width={150} />
 
       <Form ref={formRef} onSubmit={handleSubmit}>
@@ -67,6 +76,10 @@ export default function App() {
         <label>Annotation</label>
         <Input name="annotation" type="text" />
         <button type="submit">ADD</button>
+
+        <p className="alert" style={{ display: alert ? null : "none" }}>
+          Required fields!
+        </p>
       </Form>
 
       <div>
@@ -84,6 +97,6 @@ export default function App() {
           </div>
         ))}
       </div>
-    </>
+    </Container>
   );
 }
