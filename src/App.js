@@ -4,23 +4,22 @@ import Lottie from "react-lottie";
 import { Form } from "@unform/web";
 
 import Input from "./components/Input";
+import InputMessage from "./components/InputMessage";
 import note from "./note.json";
 import { Container } from "./styles/style";
 
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: note,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};
-
-let updating = false;
-let index = 0;
-
 export default function App() {
   const formRef = useRef(null);
+  const [defaultOptions, SetDefaultOptions] = useState({
+    loop: true,
+    autoplay: true,
+    animationData: note,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  });
+  const [updating, setUpdating] = useState(false);
+  const [index, setIndex] = useState(0);
   const [alert, setAlert] = useState(false);
   const [cards, setCards] = useState([]);
 
@@ -38,7 +37,7 @@ export default function App() {
 
         setCards(newCards);
 
-        updating = false;
+        setUpdating(false);
       } else {
         setCards([...cards, { title, annotation }]);
       }
@@ -61,39 +60,63 @@ export default function App() {
     formRef.current.setFieldValue("annotation", annotation);
 
     let i = cards.map((e) => e.title).indexOf(title);
-    index = i;
+    setIndex(i);
 
-    updating = true;
+    setUpdating(true);
   }
 
   return (
     <Container>
       <Lottie options={defaultOptions} height={150} width={150} />
 
-      <Form ref={formRef} onSubmit={handleSubmit}>
-        <label>Title:</label>
-        <Input name="title" type="text" />
-        <label>Annotation</label>
-        <Input name="annotation" type="text" />
-        <button type="submit">ADD</button>
+      <div className="grid">
+        <Form className="myForm" ref={formRef} onSubmit={handleSubmit}>
+          <Input
+            className="formField"
+            placeholder="Title"
+            name="title"
+            type="text"
+          />
+          <InputMessage
+            className="formField"
+            placeholder="Annotation"
+            name="annotation"
+            type="text"
+          />
+          <button className="myButton" type="submit">
+            ADD
+          </button>
 
-        <p className="alert" style={{ display: alert ? null : "none" }}>
-          Required fields!
-        </p>
-      </Form>
+          <label className="alert" style={{ display: alert ? null : "none" }}>
+            Required fields!
+          </label>
+        </Form>
 
-      <div>
         {cards.map((data, i) => (
-          <div key={i}>
-            <label>Title:</label>
-            <p>{data.title}</p>
-            <label>Annotation:</label>
-            <p>{data.annotation}</p>
+          <div key={i} className="myList">
+            <p>Title:</p>
+            <label>{data.title}</label>
+            <p>Annotation:</p>
+            <textarea
+              readOnly
+              className="annotationText"
+              value={data.annotation}
+            />
 
-            <button onClick={() => handleDelete(data.title)}>DELETE</button>
-            <button onClick={() => handleUpdate(data.title, data.annotation)}>
-              EDIT
-            </button>
+            <div className="div__button">
+              <button
+                onClick={() => handleDelete(data.title)}
+                className="myListButton"
+              >
+                DELETE
+              </button>
+              <button
+                onClick={() => handleUpdate(data.title, data.annotation)}
+                className="myListButton1"
+              >
+                EDIT
+              </button>
+            </div>
           </div>
         ))}
       </div>
