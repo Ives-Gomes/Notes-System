@@ -6,8 +6,11 @@ import { Form } from "@unform/web";
 import Swal from "../node_modules/sweetalert2/dist/sweetalert2.all.min.js";
 import Input from "./components/Input";
 import InputMessage from "./components/InputMessage";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 import note from "./note.json";
 import { Container } from "./styles/style";
+import * as themes from "./styles/themes";
+import ThemeContext from "./styles/themes/context";
 
 export default function App() {
   const formRef = useRef(null);
@@ -23,6 +26,9 @@ export default function App() {
   const [index, setIndex] = useState(0);
   const [alert, setAlert] = useState(false);
   const [cards, setCards] = useState([]);
+  const [theme, setTheme] = useState({
+    theme: themes.light,
+  });
 
   function handleSubmit(data, { reset }) {
     const { title, annotation } = data;
@@ -52,7 +58,7 @@ export default function App() {
   function handleDelete(title) {
     Swal.fire({
       title: "Tem certeza?",
-      text: "Se você apagar essa anotação não poderá resgatá-la!",
+      text: "Se você apagar essa anotação, não poderá resgatá-la!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Sim, pode deletar!",
@@ -86,61 +92,78 @@ export default function App() {
     Swal.fire("Sucesso!", "Anotação editada!", "success");
   }
 
+  function toggleTheme() {
+    setTheme({
+      theme: theme.theme === themes.light ? themes.dark : themes.light,
+    });
+  }
+
   return (
-    <Container>
-      <Lottie options={defaultOptions} height={150} width={150} />
+    <ThemeContext.Provider value={theme}>
+      <ThemeSwitcher toggleTheme={toggleTheme} />
+      <ThemeContext.Consumer>
+        {(theme) => (
+          <Container theme={theme}>
+            <Lottie options={defaultOptions} height={150} width={150} />
 
-      <div className="grid">
-        <Form className="myForm" ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            className="formField"
-            placeholder="Title"
-            name="title"
-            type="text"
-          />
-          <InputMessage
-            className="formField"
-            placeholder="Annotation"
-            name="annotation"
-            type="text"
-          />
-          <button className="myButton" type="submit">
-            ADD
-          </button>
+            <div className="grid">
+              <Form className="myForm" ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  className="formField"
+                  placeholder="Title"
+                  name="title"
+                  type="text"
+                  maxlength="30"
+                />
+                <InputMessage
+                  className="formField"
+                  placeholder="Annotation"
+                  name="annotation"
+                  type="text"
+                />
+                <button className="myButton" type="submit">
+                  ADD
+                </button>
 
-          <label className="alert" style={{ display: alert ? null : "none" }}>
-            Required fields!
-          </label>
-        </Form>
+                <label
+                  className="alert"
+                  style={{ display: alert ? null : "none" }}
+                >
+                  Required fields!
+                </label>
+              </Form>
 
-        {cards.map((data, i) => (
-          <div key={i} className="myList">
-            <p>Title:</p>
-            <label>{data.title}</label>
-            <p>Annotation:</p>
-            <textarea
-              readOnly
-              className="annotationText"
-              value={data.annotation}
-            />
+              {cards.map((data, i) => (
+                <div key={i} className="myList">
+                  <p>Title:</p>
+                  <label>{data.title}</label>
+                  <p>Annotation:</p>
+                  <textarea
+                    readOnly
+                    className="annotationText"
+                    value={data.annotation}
+                  />
 
-            <div className="div__button">
-              <button
-                onClick={() => handleDelete(data.title)}
-                className="myListButton"
-              >
-                DELETE
-              </button>
-              <button
-                onClick={() => handleUpdate(data.title, data.annotation)}
-                className="myListButton1"
-              >
-                EDIT
-              </button>
+                  <div className="div__button">
+                    <button
+                      onClick={() => handleDelete(data.title)}
+                      className="myListButton"
+                    >
+                      DELETE
+                    </button>
+                    <button
+                      onClick={() => handleUpdate(data.title, data.annotation)}
+                      className="myListButton1"
+                    >
+                      EDIT
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
-        ))}
-      </div>
-    </Container>
+          </Container>
+        )}
+      </ThemeContext.Consumer>
+    </ThemeContext.Provider>
   );
 }

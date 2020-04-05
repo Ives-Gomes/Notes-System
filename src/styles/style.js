@@ -11,7 +11,7 @@ export const Container = styled.div`
     width: 100%;
     max-width: 300px;
     min-width: 300px;
-    background: white;
+    background: ${(props) => props.theme.theme.background};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,35 +21,39 @@ export const Container = styled.div`
     margin: 0 auto;
     margin-bottom: 40px;
     margin-top: 14px;
-    border: 2px solid white;
+    border: ${(props) => props.theme.theme.border};
     &:hover {
       border: 2px solid darkblue;
     }
   }
   input {
     width: 250px;
-    border: 1px solid #000;
+    border: ${(props) => props.theme.theme.border};
     height: 40px;
     font-size: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     outline: none;
-    color: #2e0854;
+    color: black;
     padding-left: 5px;
     border-radius: 3px;
     margin-top: 20px;
     margin-bottom: 20px;
+    background: ${(props) => props.theme.theme.background};
+    color: ${(props) => props.theme.theme.color};
   }
   textarea {
     width: 250px;
-    border: 1px solid #000;
+    border: ${(props) => props.theme.theme.border};
     height: 100px;
     font-size: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     outline: none;
-    color: #2e0854;
+    color: black;
     padding-left: 5px;
     border-radius: 3px;
     resize: none;
+    background: ${(props) => props.theme.theme.background};
+    color: ${(props) => props.theme.theme.color};
   }
   div {
     display: flex;
@@ -69,7 +73,7 @@ export const Container = styled.div`
     color: white;
     background: #8861e8;
     font-weight: bold;
-    box-shadow: 2px 2px 5px #000;
+    box-shadow: 1px 1px 20px #000;
   }
   .alert {
     color: red;
@@ -81,7 +85,7 @@ export const Container = styled.div`
     width: 100%;
     max-width: 300px;
     min-width: 300px;
-    background: white;
+    background: ${(props) => props.theme.theme.background};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,17 +94,17 @@ export const Container = styled.div`
     box-shadow: 1px 1px 20px #000;
     margin: 0 auto;
     margin-bottom: 40px;
-    border: 2px solid white;
+    border: ${(props) => props.theme.theme.border};
     &:hover {
       border: 2px solid darkblue;
     }
     p {
       font-size: 15px;
-      color: #8861e8;
+      color: ${(props) => props.theme.theme.color};
       padding: 5px;
     }
     label {
-      color: #2e0854;
+      color: ${(props) => props.theme.theme.color};
       font-size: 15px;
       padding: 5px;
     }
@@ -108,6 +112,8 @@ export const Container = styled.div`
       height: 100px;
       border: none;
       scrollbar-width: 2px;
+      background: ${(props) => props.theme.theme.background};
+      color: ${(props) => props.theme.theme.color};
     }
     button:nth-child(odd) {
       background-color: red;
@@ -120,11 +126,11 @@ export const Container = styled.div`
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       color: white;
       font-weight: bold;
-      box-shadow: 2px 2px 5px #000;
+      box-shadow: 1px 1px 20px #000;
       float: left;
       margin-bottom: 10px;
       margin-right: 20px;
-      margin-top: 50px;
+      margin-top: 15px;
     }
     button:nth-child(even) {
       background-color: #e6c000;
@@ -137,10 +143,10 @@ export const Container = styled.div`
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       color: white;
       font-weight: bold;
-      box-shadow: 2px 2px 5px #000;
+      box-shadow: 1px 1px 20px #000;
       float: left;
       margin-bottom: 10px;
-      margin-top: 50px;
+      margin-top: 15px;
     }
   }
 
