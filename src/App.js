@@ -3,6 +3,7 @@ import Lottie from "react-lottie";
 
 import { Form } from "@unform/web";
 
+import Swal from "../node_modules/sweetalert2/dist/sweetalert2.all.min.js";
 import Input from "./components/Input";
 import InputMessage from "./components/InputMessage";
 import note from "./note.json";
@@ -38,21 +39,37 @@ export default function App() {
         setCards(newCards);
 
         setUpdating(false);
+        handleAlert();
       } else {
         setCards([...cards, { title, annotation }]);
       }
 
-      setAlert(false);
       reset();
+      setAlert(false);
     }
   }
 
   function handleDelete(title) {
-    let del = cards.map((e) => e.title).indexOf(title);
+    Swal.fire({
+      title: "Tem certeza?",
+      text: "Se você apagar essa anotação não poderá resgatá-la!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sim, pode deletar!",
+      cancelButtonText: "Não, deixa quieto...",
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire("Sucesso!", "Anotação deletada!", "success");
 
-    cards.splice(del, 1);
+        let del = cards.map((e) => e.title).indexOf(title);
 
-    setCards([...cards]);
+        cards.splice(del, 1);
+
+        setCards([...cards]);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelado!", "Sua anotação está segura!", "error");
+      }
+    });
   }
 
   function handleUpdate(title, annotation) {
@@ -63,6 +80,10 @@ export default function App() {
     setIndex(i);
 
     setUpdating(true);
+  }
+
+  function handleAlert() {
+    Swal.fire("Sucesso!", "Anotação editada!", "success");
   }
 
   return (
