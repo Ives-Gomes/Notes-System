@@ -1,5 +1,5 @@
 <div align="center">
-<img src="notes.png" width="20%" height="20%">
+<img src="note.png" width="20%" height="20%">
 
 <h1> Notes System </h1>
 
